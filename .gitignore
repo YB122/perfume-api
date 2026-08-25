@@ -1,6 +1,8 @@
 node_modules
 dist
 .env
+.env.example
+.env.*
 .env.local
 *.log
 coverage

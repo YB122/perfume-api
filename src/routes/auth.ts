@@ -12,6 +12,7 @@ import {
 } from '../services/auth.service';
 import {
   REFRESH_COOKIE,
+  WEB_REFRESH_COOKIE,
   setAuthCookies,
   clearAuthCookies,
   verifyRefreshToken,
@@ -104,7 +105,7 @@ authRouter.openapi(loginRoute, async (c) => {
 });
 
 authRouter.openapi(refreshRoute, async (c) => {
-  const rt = getCookie(c, REFRESH_COOKIE);
+  const rt = getCookie(c, REFRESH_COOKIE) ?? getCookie(c, WEB_REFRESH_COOKIE);
   if (!rt) return c.json({ error: 'Unauthorized' }, 401);
   try {
     const payload = await verifyRefreshToken(rt);

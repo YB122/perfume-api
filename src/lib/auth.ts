@@ -1,7 +1,7 @@
 import { createMiddleware } from 'hono/factory';
 import type { Context } from 'hono';
 
-import { verifyAccessToken, ACCESS_COOKIE, type Role, type AppJwtPayload } from './jwt';
+import { verifyAccessToken, ACCESS_COOKIE, WEB_ACCESS_COOKIE, type Role, type AppJwtPayload } from './jwt';
 import { getCookie } from 'hono/cookie';
 import { logger } from '../config/logger';
 
@@ -14,7 +14,10 @@ export interface AuthEnv {
 export const authMiddleware = createMiddleware<AuthEnv>(async (c, next) => {
   // Token may arrive via Authorization header (non-browser/API clients) or httpOnly cookie (SPA).
   const header = c.req.header('authorization');
-  const token = header?.startsWith('Bearer ') ? header.slice(7) : getCookie(c, ACCESS_COOKIE) ?? null;
+  const token =
+    header?.startsWith('Bearer ')
+      ? header.slice(7)
+      : getCookie(c, ACCESS_COOKIE) ?? getCookie(c, WEB_ACCESS_COOKIE) ?? null;
   if (!token) {
     return c.json({ error: 'Unauthorized' }, 401);
   }
