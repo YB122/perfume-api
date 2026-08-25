@@ -1,9 +1,8 @@
 node_modules
 dist
 .env
-.env.example
-.env.*
 .env.local
+# .env.example is intentionally committed as a template (see README)
 *.log
 coverage
 .DS_Store
