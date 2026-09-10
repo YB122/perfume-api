@@ -46,7 +46,10 @@ export const noSqlInjectionGuard = createMiddleware(async (c, next) => {
   // during routing remain available to downstream handlers.
   const origQuery = c.req.query.bind(c.req);
   const origParam = c.req.param.bind(c.req);
-  (c.req as any).query = () => stripOperators(origQuery()) as Record<string, string>;
+  (c.req as any).query = (name?: string) => {
+    const all = stripOperators(origQuery()) as Record<string, string>;
+    return name ? all[name] : all;
+  };
   (c.req as any).param = (name?: string) => {
     const all = stripOperators(origParam()) as Record<string, string>;
     return name ? all[name] : all;

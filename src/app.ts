@@ -11,6 +11,7 @@ import { webhooksRouter } from './routes/webhooks';
 import { adminRouter } from './routes/admin';
 import { reviewsRouter } from './routes/reviews';
 import { wishlistRouter } from './routes/wishlist';
+import { categoriesRouter } from './routes/categories';
 import { logger } from './config/logger';
 
 export const app = new OpenAPIHono();
@@ -28,6 +29,7 @@ app.route('/v1/uploads', uploadsRouter);
 app.route('/v1/admin', adminRouter);
 app.route('/v1/reviews', reviewsRouter);
 app.route('/v1/wishlist', wishlistRouter);
+app.route('/v1/categories', categoriesRouter);
 app.route('/webhooks', webhooksRouter);
 
 // Live OpenAPI spec consumed by the frontends via `openapi-typescript` (plan 1.5)
